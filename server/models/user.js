@@ -28,6 +28,11 @@ var UserSchema = new mongoose.Schema({
     trim:true,
     minlength:1
   },
+  blogurl: {
+    type:String,
+    required: true,
+    unique: true
+  },
   tokens: [{
     access: {
       type: String,

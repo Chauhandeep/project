@@ -15,10 +15,11 @@ app.use(bodyParser.json());
 
 //Setting register route
 app.post('/register',(req,res) => {
-  var body = _.pick(req.body,['username','password','firstname','lastname']);
+  var body = _.pick(req.body,['username','password','firstname','lastname','blogurl']);
   var user = new User(body);
 
   user.save().then(()=>{
+    //once user account is created an authentication token is returned
     return user.generateAuthToken();
   }).then((token) => {
     res.header('x-auth',token).send(user);
@@ -27,6 +28,7 @@ app.post('/register',(req,res) => {
   });
 });
 
+//Setting login route
 //Server is run at localhost port 3000
 app.listen(port , () => {
   console.log(`Server is up at port ${port}`);
