@@ -1,10 +1,13 @@
+require('./config/config')
+
+const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 
 var {mongoose} = require('./db/mongoose')
 
 var app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 //BodyParser is used for parsing json requests
 app.use(bodyParser.json());

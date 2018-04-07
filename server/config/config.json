@@ -1,0 +1,13 @@
+{
+  "test" : {
+    "PORT" : 3000,
+    "MONGODB_URI" : "mongodb://localhost:27017/CashPositiveTest",
+    "JWT_SECRET"  : "2378h23edbqe8hedqhdqdq3e3eh"
+  },
+  "development" : {
+    "PORT" : 3000,
+    "MONGODB_URI" : "mongodb://localhost:27017/CashPositive",
+    "JWT_SECRET"  : "dhcbaodu9qejqe32e289eqe8que"
+  }
+
+}
