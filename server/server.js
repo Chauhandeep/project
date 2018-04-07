@@ -45,7 +45,20 @@ app.post('/login',(req,res)=>{
 //Setting up blogpost route
 app.post('/blogpost',authenticate,(req,res)=>{
   var body = _.pick(req.body,['title','content']);
-
+  body.postedAt = new Date().getTime();
+  body._id = req.user._id;
+  var newPost = new BlogPost(
+    {
+      title : body.title,
+      content : body.content,
+      postedAt : body.postedAt,
+      _author : body._id
+    });
+    newPost.save().then((post)=>{
+      res.send(post);
+    },(e)=>{
+      res.status(400).send(e);
+    });
 });
 
 //Server is run at localhost port 3000
