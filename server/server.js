@@ -28,7 +28,7 @@ app.post('/register',(req,res) => {
   });
 });
 
-//Setting login route
+
 //Server is run at localhost port 3000
 app.listen(port , () => {
   console.log(`Server is up at port ${port}`);
