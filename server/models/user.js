@@ -136,14 +136,10 @@ UserSchema.statics.findByToken = function (token) {
   });
 };
  //function to check whether the user to be followed exists or not
-UserSchema.statics.findUserToBeFollowed = function(username,current_user){
+UserSchema.statics.findId = function(username){
   var User = this;
 
-  return User.findOne({username}).then((user)=>{
-    if(!user || user.username === current_user)
-    {
-      return Promise.reject();
-    }
+  return User.find({username}).then((user)=>{
     return Promise.resolve(user);
   });
 }

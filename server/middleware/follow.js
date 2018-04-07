@@ -10,7 +10,7 @@ var follow = (req, res, next) => {
     var username = req.params.username;
     console.log(username);
     user.updateFollowing(username).then((following)=>{
-      res.send(following);
+      res.status(200).send();
     }).catch((e)=>{
       res.status(400).send(e);
     })

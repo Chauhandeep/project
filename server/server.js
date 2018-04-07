@@ -47,13 +47,13 @@ app.post('/login',(req,res)=>{
 app.post('/blogpost',authenticate,(req,res)=>{
   var body = _.pick(req.body,['title','content']);
   body.postedAt = new Date().getTime();
-  body._id = req.user._id;
+  body.username= req.user.username;
   var newPost = new BlogPost(
     {
       title : body.title,
       content : body.content,
       postedAt : body.postedAt,
-      _author : body._id
+      _author : body.username
     });
     newPost.save().then((post)=>{
       res.send(post);
@@ -64,6 +64,23 @@ app.post('/blogpost',authenticate,(req,res)=>{
 
 //Setting up follow route
 app.put('/follow/:username',follow,(req,res)=>{
+});
+
+//Setting up feed request
+app.get('/feed',authenticate,(req,res)=>{
+  var following = req.user.following;
+  for(var i=0; i<following.length ;i++)
+  {
+    var username = following[i].person;
+    console.log(username);
+    var object = {
+      '_author' : username
+    };
+    BlogPost.find(object).then((user)=>{
+      res.send(user);
+    });
+};
+
 });
 
 //Server is run at localhost port 3000

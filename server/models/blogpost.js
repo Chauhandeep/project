@@ -17,8 +17,10 @@ var BlogPost = mongoose.model('blogpost', {
     type: Number
   },
   _author : {
-    type : mongoose.Schema.Types.ObjectId,
+    type : String,
     required : true,
   }
 });
+
+
 module.exports = {BlogPost};
