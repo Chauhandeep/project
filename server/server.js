@@ -13,9 +13,9 @@ const port = process.env.PORT;
 //BodyParser is used for parsing json requests
 app.use(bodyParser.json());
 
-//Setting login route
-app.post('/login',(req,res) => {
-  var body = _.pick(req.body,['email','password']);
+//Setting register route
+app.post('/register',(req,res) => {
+  var body = _.pick(req.body,['username','password','firstname','lastname']);
   var user = new User(body);
 
   user.save().then(()=>{
