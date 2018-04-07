@@ -61,6 +61,16 @@ app.post('/blogpost',authenticate,(req,res)=>{
     });
 });
 
+//Setting up follow route
+app.put('/follow/:username',authenticate,(req,res)=>{
+  var username = req.params.username;
+  User.findUserToBeFollowed(username,req.user.username).then((user)=>{
+    res.send('Followed');
+  }).catch((e)=>{
+    res.status(400).send(e);
+  })
+});
+
 //Server is run at localhost port 3000
 app.listen(port , () => {
   console.log(`Server is up at port ${port}`);
