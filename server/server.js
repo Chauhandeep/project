@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 
 var {mongoose} = require('./db/mongoose');
 var {User} = require('./models/user');
+var {BlogPost} = require('./models/blogpost');
+var {authenticate} = require('./middleware/authenticate.js')
 
 var app = express();
 const port = process.env.PORT;
@@ -42,7 +44,8 @@ app.post('/login',(req,res)=>{
 
 //Setting up blogpost route
 app.post('/blogpost',authenticate,(req,res)=>{
-  console.log(req.user._id, req.token);
+  var body = _.pick(req.body,['title','content']);
+
 });
 
 //Server is run at localhost port 3000
