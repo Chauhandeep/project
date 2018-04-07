@@ -42,6 +42,7 @@ app.post('/login',(req,res)=>{
 
 //Setting up blogpost route
 app.post('/blogpost',authenticate,(req,res)=>{
+  console.log(req.user._id, req.token);
 });
 
 //Server is run at localhost port 3000
