@@ -60,7 +60,7 @@ UserSchema.methods.generateAuthToken = function () {
 };
 
 //hashing password before storing into database
-//using bcrypt 
+//using bcrypt
 UserSchema.pre('save', function (next) {
   var user = this;
 
@@ -75,6 +75,31 @@ UserSchema.pre('save', function (next) {
     next();
   }
 });
+
+//function to basically find whether a particular user is registered
+// or not
+//if the user is found then a promise is returned containing the user details
+UserSchema.statics.findByCredentials = function(username,password){
+  var User = this;
+
+  return User.findOne({username}).then((user)=>{
+    if(!user){
+      return Promise.reject();
+    }
+
+    return new Promise((resolve,reject)=>{
+      bcrypt.compare(password,user.password,(err,res)=>{
+        if(res){
+          resolve(user);
+        }
+        else {
+          reject();
+        }
+      });
+    });
+  });
+};
+
 
 var User = mongoose.model('User', UserSchema);
 

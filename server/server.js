@@ -28,6 +28,17 @@ app.post('/register',(req,res) => {
   });
 });
 
+//setting login route
+app.post('/login',(req,res)=>{
+  var body = _.pick(req.body,['username','password']);
+  User.findByCredentials(body.username,body.password).then((user)=>{
+    return user.generateAuthToken().then((token)=>{
+      res.header('x-auth',token).send(user);
+    });
+  }).catch((e)=>{
+    res.status(400).send(e);
+  });
+});
 
 //Server is run at localhost port 3000
 app.listen(port , () => {
