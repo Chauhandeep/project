@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 var {mongoose} = require('./db/mongoose');
 var {User} = require('./models/user');
 var {BlogPost} = require('./models/blogpost');
-var {authenticate} = require('./middleware/authenticate.js')
+var {authenticate} = require('./middleware/authenticate.js');
+var {follow} = require('./middleware/follow.js');
 
 var app = express();
 const port = process.env.PORT;
@@ -62,13 +63,7 @@ app.post('/blogpost',authenticate,(req,res)=>{
 });
 
 //Setting up follow route
-app.put('/follow/:username',authenticate,(req,res)=>{
-  var username = req.params.username;
-  User.findUserToBeFollowed(username,req.user.username).then((user)=>{
-    res.send('Followed');
-  }).catch((e)=>{
-    res.status(400).send(e);
-  })
+app.put('/follow/:username',follow,(req,res)=>{
 });
 
 //Server is run at localhost port 3000

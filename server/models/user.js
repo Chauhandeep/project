@@ -33,6 +33,12 @@ var UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  following: [{
+    person: {
+      type: String,
+      required : true,
+    }
+  }],
   tokens: [{
     access: {
       type: String,
@@ -75,6 +81,17 @@ UserSchema.pre('save', function (next) {
     next();
   }
 });
+
+//function to update the following list of a user
+UserSchema.methods.updateFollowing = function(person) {
+  var user = this;
+
+  user.following.unshift({person});
+  return user.save().then(()=>{
+    return user.following;
+  });
+}
+
 
 //function to basically find whether a particular user is registered
 // or not
