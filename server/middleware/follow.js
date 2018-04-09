@@ -8,7 +8,6 @@ var follow = (req, res, next) => {
       return Promise.reject();
     }
     var username = req.params.username;
-    console.log(username);
     user.updateFollowing(username).then((following)=>{
       res.status(200).send();
     }).catch((e)=>{

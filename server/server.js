@@ -20,15 +20,28 @@ app.use(bodyParser.json());
 app.post('/register',(req,res) => {
   var body = _.pick(req.body,['username','password','firstname','lastname','blogurl']);
   var user = new User(body);
-
-  user.save().then(()=>{
-    //once user account is created an authentication token is returned
-    return user.generateAuthToken();
-  }).then((token) => {
-    res.header('x-auth',token).send(user);
+  User.registerHelper(body.username).then((person)=>{
+    if(person==null)
+    {
+      user.save().then(()=>{
+        //once user account is created an authentication token is returned
+        return user.generateAuthToken();
+      }).then((token) => {
+        res.header('x-auth',token).send(user);
+      }).catch((e)=>{
+        res.status(400).send(e);
+      });
+    }
+    else {
+      var object = {
+        'error' : 'username already in use.'
+      }
+      res.send(object);
+    }
   }).catch((e)=>{
-    res.status(400).send(e);
+    console.log(user);
   });
+
 });
 
 //setting login route
@@ -68,19 +81,24 @@ app.put('/follow/:username',follow,(req,res)=>{
 
 //Setting up feed request
 app.get('/feed',authenticate,(req,res)=>{
-  var following = req.user.following;
-  for(var i=0; i<following.length ;i++)
-  {
-    var username = following[i].person;
-    console.log(username);
-    var object = {
-      '_author' : username
-    };
-    BlogPost.find(object).then((user)=>{
-      res.send(user);
+  following = req.user.following;
+  var posts = [];
+  following.map((row) => {
+    var username = row.person;
+    BlogPost.find({
+      '_author': username
+    }).then((blogpost)=>{
+        if(blogpost != null)
+        {
+        posts.unshift(blogpost);
+        }
+    }).catch((e)=>{
+      return NULL;
     });
-};
-
+  });
+  setTimeout(()=>{
+      res.send(posts);
+  },1000);
 });
 
 //Server is run at localhost port 3000

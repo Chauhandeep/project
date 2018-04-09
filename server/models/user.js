@@ -144,6 +144,14 @@ UserSchema.statics.findId = function(username){
   });
 }
 
+UserSchema.statics.registerHelper = function(username){
+  var User = this;
+
+  return User.findOne({'username' : username}).then((user)=>{
+      return Promise.resolve(user);
+  });
+}
+
 var User = mongoose.model('User', UserSchema);
 
 module.exports = {User}
