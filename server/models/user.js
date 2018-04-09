@@ -92,6 +92,17 @@ UserSchema.methods.updateFollowing = function(person) {
   });
 }
 
+//function to remvoe token from
+UserSchema.methods.removeToken = function(token){
+  var user = this;
+
+  return user.update({
+    $pull : {
+    tokens: {token}
+    }
+  });
+};
+
 
 //function to basically find whether a particular user is registered
 // or not
