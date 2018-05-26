@@ -1,0 +1,39 @@
+body{
+  background-image : url('https://images.wallpaperscraft.com/image/people_live_hands_80419_1920x1080.jpg');
+}
+#homeButtons{
+  float : right;
+  margin-top : 10px;
+  margin-right : 10px;
+  clear:both;
+  display:block;
+}
+#homeButtons a {
+  background-color : rgba(255,255,255,0);
+  box-shadow : 0 0px 0px 0;
+  font-size : 2vh;
+  color : black;
+}
+ #homeButtons a:hover{
+   background-color : rgba( 23, 32, 42,0.5);
+   color : white;
+ }
+#heading{
+  position:absolute;
+  color:black;
+  text-align:center;
+  margin-top:10vh;
+  margin-left:25vw;
+}
+#heading a {
+  background-color : rgba( 52, 73, 94,0.7);
+  margin-top : 1vh;
+  border-radius:5px;
+  box-shadow : 0 0px 0px 0;
+  font-size : 2vh;
+  color : black;
+}
+#heading a:hover{
+  background-color : rgba( 23, 32, 42,0.5);
+  color : white;
+}

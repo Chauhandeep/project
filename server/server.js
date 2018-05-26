@@ -3,6 +3,7 @@ require('./config/config')
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
+const hbs = require('hbs');
 
 var {mongoose} = require('./db/mongoose');
 var {User} = require('./models/user');
@@ -12,6 +13,17 @@ var {follow} = require('./middleware/follow.js');
 
 var app = express();
 const port = process.env.PORT;
+
+app.use(express.static('public'));
+hbs.registerPartials(__dirname + '../views/partials');
+
+app.get('/',(req,res)=>{
+  res.render('home.hbs');
+});
+
+//REST API
+//Setting View Engine to HBS
+app.set('view engine', 'hbs');
 
 //BodyParser is used for parsing json requests
 app.use(bodyParser.json());
